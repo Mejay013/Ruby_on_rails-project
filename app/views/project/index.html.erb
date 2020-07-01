@@ -1,0 +1,32 @@
+<h1> Задачи </h1>
+<br>
+
+  <% @tasks.each do |task| %>
+    <%= task.title %>
+    <ul>
+    <% Project.find(task.id).todos.each do |todotask| %>
+        <li> <%= todotask.text %> </li>
+      <% end %>
+    </ul>
+  <% end %>
+
+
+  <input type="button" id="plus" value="+" />
+
+
+  <div id="add_form">
+
+      <%= form_with scope: :form_add, id: "form_add" , url: create_url, local: true do |form| %>
+          <p>
+            <h3>Новая задача</h3>
+            <%= form.text_field :title, id: "title"%>
+          </p>
+          <%= form.select(:project_id, @project_type ,id: "project_id")%>
+          <p>
+          <%= link_to :Отмена , "#", id: "minus"  %>
+          <%= link_to 'OK', "#", id: "submit_btn" %>
+          </p>
+        <% end %>
+
+  </div>
+
